@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[ ]:
+
+
+#DAW Individual Project: Rossvern Reyes
+
+
 # In[1]:
 
 
@@ -44,34 +50,36 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(assets_folder='static/', external_stylesheets=external_stylesheets)
 
 
-# In[5]:
-
-
-df_atm = pd.read_csv('atm_data.csv')
-df_bank = pd.read_csv('bank_data.csv')
-
-
 # In[6]:
 
 
-bank_3 = df_bank.groupby(['Region', 'Province', 'City/Municipality']).sum()
+df_atm = pd.read_csv('data/atm_data.csv')
+df_bank = pd.read_csv('data/bank_data.csv')
 
 
 # In[7]:
 
 
+bank_3 = df_bank.groupby(['Region', 'Province', 'City/Municipality']).sum()
+
+
+# In[8]:
+
+
 df_1 = df_atm.groupby(['Region', 'Province', 'City/Municipality']).sum()
 
 
-# In[51]:
+# In[9]:
 
 
 app.callback_map = {}
 
 app.layout = html.Div([
     html.Div([
-        html.H3('Physical Network of the Philippine Banking System'),
-        html.Label('Rossvern Reyes')
+        html.H3('A Visualization of the Physical Network of the Philippine Banking System',
+               style={'color': '#0000A0'}),
+        html.Label('Rossvern Reyes',
+                  style={'font-style': 'italic'})
         ],
         style={
             'text-align': 'center'
@@ -81,7 +89,7 @@ app.layout = html.Div([
         html.P(
         "Part of the Philippine government’s thrust towards an inclusive economic growth is advancing " 
         "financial inclusion in the country. However, one of the hurdles in achieving an inclusive financial " 
-        "system is the limited touch points to the banking system, particularly in the rural areas. " 
+        "system is the limited touchpoints to the banking system, particularly in the rural areas. " 
         "A survey of the central bank in 2018 revealed that only 22.6% of the adult Filipinos own a formal bank account. "
         "To gain a deeper understanding of the low level of participation in the formal banking system, this web "
         "application offers an interactive visualization of the distribution of bank offices and automated teller "
@@ -159,12 +167,11 @@ app.layout = html.Div([
     ),
     html.Div([
     html.P(
-        "The Philippine banking system is composed of universal and commercial banks (UKBs), thrift banks, "
-        " rural and cooperative banks. UKBs represent the largest single group, resource-wise, of financial "
-        "institutions in the country. UKBs also offer the widest variety of banking services among financial institutions. "
-        "The thrift banking (TB) system is composed of savings and mortgage banks, private development banks, stock savings "
-        "and loan associations and microfinance thrift banks. Rural and cooperative banks (RBs) are the more popular type of banks "
-        "in the rural communities. RBs help promote and expand the rural economy in an orderly and effective manner by providing the people in the rural communities with basic financial services."
+        "An exploration of the plots above would show that over 85% of the cities and municipalities have zero to  "
+        "very limited physical access to formal financing. Where Universal and Commercial Banks are not  "
+        "available, Thrift Banks and Rural Banks are present, but only to a few areas. The presence of a banking  "
+        "facility plays a vital role in an area’s growth and development, hence, the government’s agenda for  "
+        "greater financial inclusion must overcome these physical barriers."
     )],
         style={
             'width': '90%',
@@ -217,9 +224,9 @@ def regional_bank_graph(region):
         y=bank_2['Branch-lite Unit'], name='Branch-lite Unit'))
     
     return {
-        'data': [trace4, trace3, trace2, trace1], 
+        'data': [trace2, trace4, trace1, trace3], 
         'layout': {
-        'title': f'Number of Bank Offices by Region',
+        'title': f'Number of Bank Offices by Province',
         'xaxis': {
 #             'title': 'Province',
             'categoryorder':'total descending',
@@ -260,7 +267,7 @@ def regional_atm_graph(region):
     return {
         'data': [trace3, trace2, trace1], 
         'layout': {
-        'title': f'Number of ATMs by Region',
+        'title': f'Number of ATMs by Province',
         'xaxis': {
 #             'title': 'Province',
             'categoryorder':'total descending',
@@ -302,7 +309,7 @@ def provincial_bank_graph(region, province):
                     y=bank_4['Branch-lite Unit'], 
                     name='Branch-lite Unit'))
     
-    return {'data': [trace4, trace3, trace2, trace1], 
+    return {'data': [trace2, trace4, trace1, trace3], 
             'layout': {
             'title': f'Number of Bank Offices by City/Municipality',
             'xaxis': {
@@ -357,15 +364,21 @@ def provincial_atm_graph(region, province):
            }
 
 
-# In[9]:
+# In[ ]:
 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
 
 
-# In[52]:
+# In[11]:
 
 
 show_app(app)
+
+
+# In[ ]:
+
+
+
 
